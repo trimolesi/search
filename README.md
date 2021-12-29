@@ -36,7 +36,7 @@ url [http://localhost:3000/search/engine/query](http://localhost:3000/search/eng
 (**google**, **bing** or **both**)
 and query is what you want search
 
-To enable cache in development run `rails dev:cache`
+To enable **cache** in development run `rails dev:cache`
 
 ## License
 
