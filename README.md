@@ -6,14 +6,16 @@ Simple project using nokogiri and mechanize to get results from **Google** and *
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-##  Gems used on project
-Ruby on Rails, Nokogiri, Mechanize, Rspec, Webmock 
+## Gems used on project
+
+Ruby on Rails, Nokogiri, Mechanize, Rspec, Webmock
 
 ## Features
 
 - Get results from Google or Bing or both and return results in json.
 
 ## Installation
+
 Ruby 3\
 Bundler\
 Rails 6\
@@ -33,6 +35,8 @@ url [http://localhost:3000/search/engine/query](http://localhost:3000/search/eng
 and query is what you want search
 
 To enable **cache** in development run `rails dev:cache`
+
+Documentation for API is available on [localhost:3000/apiepie](localhost:3000/apiepie)
 
 ## License
 
