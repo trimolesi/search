@@ -96,11 +96,13 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  #Mock resposnses
   config.before(:each) do
+    params = 'docker'
     raw_response_file = File.new(Rails.root.join('spec', 'fixtures', 'response-google.html'))
-    stub_request(:get, "#{Searches::GoogleResults::BASE_URL}?q=docker").to_return(body: raw_response_file, status: 200)
+    stub_request(:get, "#{Searches::GoogleResults::BASE_URL}?q=#{params}").to_return(body: raw_response_file, status: 200)
 
     raw_response_file = File.new(Rails.root.join('spec', 'fixtures', 'response-bing.html'))
-    stub_request(:get, "#{Searches::BingResults::BASE_URL}?q=docker").to_return(body: raw_response_file, status: 200)
+    stub_request(:get, "#{Searches::BingResults::BASE_URL}?q=#{params}").to_return(body: raw_response_file, status: 200)
   end
 end
