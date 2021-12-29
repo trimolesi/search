@@ -1,0 +1,6 @@
+en:
+  errors:
+    not_found: "Engine not available"
+    empty: "can't be empty  "
+    search_engine_not_available: "Search engine not available"
+    query_not_informed: "Query not informed"

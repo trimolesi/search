@@ -65,3 +65,17 @@ yarn-debug.log*
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-*
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+.byebug_history
+./.idea
+# Ignore master key for decrypting credentials and more.
+/config/master.key
