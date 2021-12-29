@@ -2,10 +2,6 @@
 
 Simple project using nokogiri and mechanize to get results from **Google** and **Bing**.
 
-## Build status
-
-[![Build Status](https://travis-ci.org/akashnimare/foco.svg?branch=main)](https://travis-ci.org/github/trimolesi/search)
-
 ## Code style
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
