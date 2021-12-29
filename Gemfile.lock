@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/hank-spokeo/apipie-rails.git
+  revision: 68facbafb42083e5294c2ec8358877fde905e88b
+  branch: ruby-3.0
+  specs:
+    apipie-rails (0.5.18)
+      rails (>= 4.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -202,6 +210,7 @@ PLATFORMS
   arm64-darwin-20
 
 DEPENDENCIES
+  apipie-rails!
   bootsnap (>= 1.4.4)
   byebug
   listen (~> 3.3)

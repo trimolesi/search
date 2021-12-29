@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe SearchController do
+RSpec.describe Api::V1::SearchController do
   describe 'GET /search' do
     it 'valid request with google' do
       params = { engine: 'google', query: 'docker' }
@@ -38,7 +38,6 @@ RSpec.describe SearchController do
 
     it 'unknow engine' do
       params = { engine: 'otherengine', query: 'docker' }
-
       get :index, params: params
       hash_response = JSON.parse(response.body)
 

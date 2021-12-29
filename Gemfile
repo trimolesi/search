@@ -44,4 +44,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'mechanize'
 gem 'nokogiri'
-
+# Create documentation to API
+gem 'apipie-rails', git: 'https://github.com/hank-spokeo/apipie-rails.git', branch: 'ruby-3.0'
