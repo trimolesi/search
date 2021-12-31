@@ -36,7 +36,7 @@ and query is what you want search
 
 To enable **cache** in development run `rails dev:cache`
 
-Documentation for API is available on [localhost:3000/apiepie](localhost:3000/apiepie)
+Documentation for API is available on [localhost:3000/apipie](http://localhost:3000/apipie)
 
 ## License
 
