@@ -16,7 +16,11 @@ class Search
     else
       return nil
     end
+    acc_results = counter_results_json(engine, json, page, query)
+    acc_results.merge(json)
   end
+
+  private
 
   def self.merge_results(page, *results)
     results.compact!
@@ -28,5 +32,22 @@ class Search
 
     hash_merged = { page: page.to_i, results_count_on_page: join_arr.size, results: join_arr }
     return hash_merged
+  end
+
+  def self.increment_counter_of_results_to_page(engine:, query:, page: 1, size:)
+    previous_page = page == 1 ? page : page.to_i - 1
+    previous_acc_page = Rails.cache.fetch("counter-results-#{engine}-#{query}-#{previous_page}")
+
+    size = Rails.cache.fetch("counter-results-#{engine}-#{query}-#{page}", expires_in: 1.hour) do
+      previous_acc_page ||= 0
+      previous_acc_page + size
+    end
+    size
+  end
+
+  def self.counter_results_json(engine, json, page, query)
+    results_size = json[:results].size if json.present?
+    acc_results = Search.increment_counter_of_results_to_page(query: query, engine: engine, page: page, size: results_size)
+    { counter_results: acc_results }
   end
 end
