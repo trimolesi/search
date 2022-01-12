@@ -1,28 +1,32 @@
 class Search
 
   AVAILABLE_ENGINES = ["google", "bing"].freeze
-  def self.get_results(engine:, query:, next_page_bing: nil , next_page_google: nil)
+
+  def self.get_results(engine:, query:, page: 1)
+
     case engine
     when 'google'
-      Searches::GoogleResults.call(query, next_page_google)
+      json = Searches::GoogleResults.call(query, page)
     when 'bing'
-      Searches::BingResults.call(query, next_page_bing)
+      json = Searches::BingResults.call(query, page)
     when 'both'
-      arr_results_google = Searches::GoogleResults.call(query, next_page_google)
-      arr_results_bing = Searches::BingResults.call(query, next_page_bing)
-      merge_results(arr_results_google, arr_results_bing)
+      arr_results_google = Searches::GoogleResults.call(query, page)
+      arr_results_bing = Searches::BingResults.call(query, page)
+      json = merge_results(page, arr_results_google, arr_results_bing)
+    else
+      return nil
     end
   end
 
-  def self.merge_results(*results)
+  def self.merge_results(page, *results)
     results.compact!
     #Iterate over array to concat all results from all engines
     join_arr = results.flat_map { |result_engine| result_engine[:results] }
+
     #Remove duplicated results from differents engines, comparing same URL and Title.
     join_arr.uniq! { |result| result[:url] && result[:title] }
-    #get next page from google and bing and add it to array
-    next_page = results.map {|result| result[:next_page] }
-    hash_merged = { next_page: next_page, results: join_arr}
+
+    hash_merged = { page: page.to_i, results_count_on_page: join_arr.size, results: join_arr }
     return hash_merged
   end
 end
