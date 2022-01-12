@@ -17,11 +17,10 @@ module Searches
     def call
       return nil if @query.blank?
 
-      # query = CGI::escape(query)
       Rails.cache.fetch("bing-#{@query}-#{@page}", expires_in: 1.hour) do
         params = { q: @query }
         # Param to paginate on bing
-        params[:first] = @page if @page.present?
+        params[:first] = paginate if @page.present? and @page.to_i != 1
         body_html = @agent.get(BASE_URL, params, BASE_URL, USER_AGENT).content
         parser(body_html)
       end
@@ -47,7 +46,7 @@ module Searches
       # Check if page is present, if it's present add the size of result return to next page
       # else the next page will be the size of results returned
       next_page = @page.present? ? @page.to_i + arr_results.size : arr_results.size
-      data_json(result_stats, next_page, arr_results)
+      data_json(result_stats, arr_results)
     end
 
     def parse_div_with_news(news_div)
@@ -72,12 +71,17 @@ module Searches
       hash_result
     end
 
-    def data_json(result_stats, next_page, arr_results)
+    def data_json(result_stats, arr_results)
       {
         result_stats: result_stats,
-        next_page: { bing: next_page },
+        results_count_on_page: arr_results.size,
+        page: @page.to_i,
         results: arr_results
       }
+    end
+
+    def paginate
+      return (@page.to_i * 10 - 1) - 10
     end
   end
 end

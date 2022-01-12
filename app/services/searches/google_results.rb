@@ -7,7 +7,7 @@ module Searches
 
     BASE_URL = 'https://google.com/search'
 
-    def initialize(query, page = nil)
+    def initialize(query, page = 1)
       super()
       @agent = Mechanize.new
       @query = query
@@ -20,7 +20,7 @@ module Searches
       Rails.cache.fetch("google-#{@query}-#{@page}", expires_in: 1.hour) do
         params = { q: @query }
         # Param to paginate on google
-        params[:start] = @page if @page.present?
+        params[:start] = paginate if @page.present? and @page.to_i != 1
         body_html = @agent.get(BASE_URL, params, BASE_URL, USER_AGENT).content
         parser(body_html)
       end
@@ -43,9 +43,8 @@ module Searches
         hash_result = parse_div_with_news(news_div)
         arr_results << hash_result if hash_result.present?
       end
-      # Check if page is present, if it's present add 10 to next page else the next page will be 10
-      next_page = @page.present? ? @page.to_i + 10 : 10
-      data_json(arr_results, next_page, result_stats)
+
+      data_json(arr_results, result_stats)
     end
 
     def parse_div_with_news(news_div)
@@ -68,12 +67,17 @@ module Searches
       hash_result
     end
 
-    def data_json(arr_results, next_page, result_stats)
+    def data_json(arr_results, result_stats)
       {
         result_stats: result_stats,
-        next_page: { google: next_page },
+        results_count_on_page: arr_results.size,
+        page: @page.to_i,
         results: arr_results
       }
+    end
+
+    def paginate
+      return (@page.to_i - 1) * 10
     end
   end
 end
